@@ -17,7 +17,7 @@ class ScoreBoardTest {
         ScoreBoard scoreBoard = createScoreBoard();
 
         assertThat(scoreBoard.print()).isEqualToIgnoringWhitespace("""
-                0 Punkte nach 0 Runden
+                Computer: 0 Punkte nach 0 Runden
                               Einser
                               Zweier
                               Dreier
@@ -48,7 +48,7 @@ class ScoreBoardTest {
 
         scoreBoard.playRound(Category.YAHTZEE, 1, 1, 1, 1, 1);
         assertThat(scoreBoard.print()).isEqualToIgnoringWhitespace("""
-                50 Punkte nach 1 Runden
+                Computer: 50 Punkte nach 1 Runden
                               Einser
                               Zweier
                               Dreier
@@ -71,7 +71,7 @@ class ScoreBoardTest {
 
         scoreBoard.playRound(Category.FIVES, 1, 5, 3, 5, 5);
         assertThat(scoreBoard.print()).isEqualToIgnoringWhitespace("""
-                65 Punkte nach 2 Runden
+                Computer: 65 Punkte nach 2 Runden
                               Einser
                               Zweier
                               Dreier

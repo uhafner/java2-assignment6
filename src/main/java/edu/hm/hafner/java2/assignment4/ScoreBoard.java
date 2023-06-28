@@ -31,15 +31,25 @@ public class ScoreBoard {
         }
     }
 
+    private final String player;
+
     private final Entry[] entries = new Entry[Category.values().length];
     private final Row[] rows = new Row[Category.values().length + 3 + 2];
 
     /**
      * Creates a new score board.
+     *
+     * @param player the name of the player
      */
     public ScoreBoard(final String player) {
+        this.player = player;
+
         createSelectableEntries();
         createPrintableEntries();
+    }
+
+    public String getPlayer() {
+        return player;
     }
 
     private void createSelectableEntries() {
@@ -101,7 +111,7 @@ public class ScoreBoard {
      */
     public String print() {
         StringBuilder board = new StringBuilder(1024);
-        board.append(String.format("%d Punkte nach %d Runden%n", getScore(), getPlayedRounds()));
+        board.append(String.format("%s: %d Punkte nach %d Runden%n", getPlayer(), getScore(), getPlayedRounds()));
         for (Row entry : rows) {
             board.append(entry.getText());
             board.append('\n');
