@@ -1,4 +1,4 @@
-= Übungsblatt 5 - Softwareentwicklung 2
+= Übungsblatt 7 - Softwareentwicklung 2
 :icons: font
 Prof. Dr. Ullrich Hafner <ullrich.hafner@hm.edu>
 :toc-title: Inhaltsverzeichnis
@@ -24,211 +24,109 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-[TIP]
-====
+== Collections in Yahtzee
 
-Die Abgabe dieses Übungsblattes ist möglich bis zum 22.6. 18:00. Laden Sie Ihre Lösung im GitHub Classroom https://classroom.github.com/a/NrtYYueh[Assignment 5] auf den eigenen `main` Branch hoch.
+Basis für alle Aufgaben dieses Blattes ist wieder das Würfelspiel Yahtzee, das wir in den vorherigen Blättern als
+Thema hatten.
 
-====
+=== Aufgabe 12 -- Sortieren von Collections
 
-== Aufgabe 10 -- Yahtzee Spielblock
+Im letzten Blatt haben wir den Yahtzee Spielblock vollendet. Ergebnis war eine Klasse, das den Punktestand einer spielenden Person verwaltet: Das Ergebnis eines Spielers lässt sich konnten Sie bereits ausgeben, aber schöner wäre natürlich die automatische Sortierung der Ergebnisse. Dazu muss das `SccoreBoard` sortierbar werden.
 
-Zum richtigen Spielen von Yahtzee benötigt es einen Spielblock. In diesem sind alle Zeilen für die verschiedenen Bilder aufgelistet mit der jeweils erreichten Punktzahl. Darüber hinaus sind dort auch der Bonus und die einzelnen Zwischensummen zu finden. Ein Beispiel finden Sie z.B. in https://de.wikipedia.org/wiki/Kniffel#Spielblock[Wikipedia]. Die gewünschte Ausgabe aus Java heraus soll folgendermaßen ausschauen:
+==== Aufgabe 12.1 -- Implementieren des Comparable Interfaces
 
-.Ausgangsstellung beim Spiel
-[source,text]
+Implementieren Sie das `Comparable` Interface für die Klasse `SccoreBoard`. Als Sortierkriterium soll der Punktestand verwendet werden (absteigende Sortierung, also das Element mit den meisten Punkten zuerst). Ist der Punktestand zweier Instanzen gleich, soll anschließend diejenige Instanz vorne liegen, die weniger Runden für den Punktestand gebraucht hat. Ist auch hier wieder Gleichstand, dann wird noch verglichen, wer weniger Einträge gestrichen hat (also am wenigsten 0 Punkte Einträge hat). Wenn immer noch Gleichstand herrscht, soll letztendlich der Name als Sortierkriterium verwendet werden (Alphabet), der ist ja zum Glück eindeutig im System.
+
+Schreiben Sie Tests, die die korrekte Funktionsweise Ihrer `Comparable` Implementierung überprüfen. Legen Sie dazu z.B. drei `ScoreBoard` Instanzen an und fügen Sie diese in eine Liste. Verändern Sie die Scores und sortieren Sie dann die Liste. Abschließend prüfen Sie die korrekte Sortierung der Instanzen. Denken Sie auch daran, verschiedenen Startreihenfolgen zu testen (schon richtig sortiert, falsch sortiert, etc.).
+
+Beispiel:
+[text]
 ----
-0 Punkte nach 0 Runden
-              Einser
-              Zweier
-              Dreier
-              Vierer
-              Fünfer
-             Sechser
-          Summe oben   0
-               Bonus   0
-Gesamter oberer Teil   0
-            Drilling
-            Vierling
-          Full House
-       Kleine Straße
-        Große Straße
-             Yahtzee
-              Chance
-         Summe unten   0
-         Gesamtsumme   0
+Costantino, 120, 12 Runden, 1 gestrichen
+Hafner, 120, 13 Runden, 0 gestrichen
+Katz, 120, 13 Runden, 1 gestrichen
 ----
 
-Nach dem Wurf `[1, 1, 1, 1, 1]` und Auswahl eines *Yahtzee* kommt folgende Ausgabe:
+==== Aufgabe 1b -- Sortierung des Scoreboards nach Name
 
-.Zwischenstand nach dem Wurf `[1, 1, 1, 1, 1]` und Auswahl eines *Yahtzee*
-[source,text]
+Schreiben Sie einen `Comparator`, der zum Sortieren einer Liste von `ScoreBoard` Instanzen verwendet werden kann.
+Die Sortierung soll nur alphabetisch nach Name erfolgen.
+
+Schreiben Sie Tests, die die korrekte Funktionsweise Ihres Comparators überprüfen.
+Legen Sie dazu z.B. drei `ScoreBoard` Instanzen an und fügen Sie diese in eine Liste.
+Sortieren Sie dann die Liste. Abschließend prüfen Sie die korrekte Sortierung der Instanzen. Denken Sie daran,
+verschiedenen Startreihenfolgen zu testen.
+
+Beispiel:
+[text]
 ----
-50 Punkte nach 1 Runden
-              Einser
-              Zweier
-              Dreier
-              Vierer
-              Fünfer
-             Sechser
-          Summe oben   0
-               Bonus   0
-Gesamter oberer Teil   0
-            Drilling
-            Vierling
-          Full House
-       Kleine Straße
-        Große Straße
-             Yahtzee  50
-              Chance
-         Summe unten  50
-         Gesamtsumme  50
+Costantino, 115
+Hafner, 120
+Katz, 99
 ----
 
-Beim nächsten Wurf fallen die Würfel als [1, 5, 3, 5, 5]. Bei Auswahl als *Fünfer* kommt dann folgende Ausgabe:
+==== Aufgabe 1c -- Sortierung des Scoreboards nach Score
 
-.Zwischenstand nach dem Wurf `[1, 5, 3, 5, 5] und Auswahl als *Fünfer*
-[source,text]
+Schreiben Sie einen weiteren `Comparator`, der zum Sortieren einer Liste von `ScoreBoard` Instanzen verwendet werden kann. Die Sortierung soll diesmal nach Punkten gehen: d.h. zunächst kommen die Instanzen mit hohen Punktezahlen, dann die Instanzen mit den niedrigen Punktezahlen.
+
+Schreiben Sie Tests, die die korrekte Funktionsweise Ihres Comparators überprüfen. Legen Sie dazu z.B. drei ScoreBoard Instanzen an und fügen Sie diese in eine Liste. Verändern Sie die Scores und sortieren Sie dann die Liste. Abschließend prüfen Sie die korrekte Sortierung der Instanzen.
+
+Beispiel:
+[text]
 ----
-65 Punkte nach 2 Runden
-              Einser
-              Zweier
-              Dreier
-              Vierer
-              Fünfer  15
-             Sechser
-          Summe oben  15
-               Bonus   0
-Gesamter oberer Teil  15
-            Drilling
-            Vierling
-          Full House
-       Kleine Straße
-        Große Straße
-             Yahtzee  50
-              Chance
-         Summe unten  50
-         Gesamtsumme  65
+Kuhn, 120
+Hafner, 115
+Kersting, 98
 ----
 
-Das geht immer so weiter, bis das Spiel beendet ist.
+==== Aufgabe 1d -- Kombinieren mehrerer Comparatoren
 
-Schreiben Sie die Elemente dieses Spielblocks in Java. Damit Sie nicht bei null anfangen müssen, habe ich Ihnen den größten Teil der Hierarchie schon vorgegeben. Der Spielblock besteht aus einzelnen Zeilen vom Typ `Row` und einer kurzen Überschrift. Die einzelnen Zeilen sind alle gleich aufgebaut: Zunächst steht der Name der Zeile (Methode `getDisplayName()`) und gleich dahinter die erreichte Punktzahl (Methode `printScore()`).
+Informieren Sie sich im Internet (z.B. unter der offiziellen https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Comparator.html[Oracle Java Seite])wie man mehrere Comparatoren miteinander verknüpft. Schreiben Sie 2 weitere Testfälle, die diese Verknüpfung testen:
 
-Zur Darstellung der Zeilen vom Typ (`Row`) müssen drei Fälle unterschieden werden, die jeweils durch eine Klasse repräsentiert werden:
+1. Sortierung nach Name und dann nach Score
+2. Sortierung nach Score und dann nach Name
 
-- `Entry`: Definiert einen setzbaren Eintrag (siehe letztes Aufgabenblatt) und wird jeweils mit einer der möglichen Kategorien "Einer", "Zweier", ..., "Chance" belegt. Der Eintrag kann mit einem Würfelwurf gesetzt werden. Dann ist dieser fest und kann nicht mehr geändert werden. Neben dem Setzten bietet dieser Eintrag auch die Möglichkeit, den Punktewert der jeweiligen Kategorie nur zu ermitteln: so kann der Spieler selbst entscheiden, wie sinnvoll es ist, diesen Wert zu selektieren oder nicht.
-- `Bonus`: Definiert den Bonus der oberen Hälfte, dieser hat den Wert 35, falls die Summe aus den Zeilen "Einer", "Zweier", ..., "Sechser" größer oder gleich 63 ist, oder 0 in allen anderen Fällen. D.h. der Bonus wird automatisch berechnet und kann nicht gesetzt werden.
-- `Sum`: Summiert eine vorgegebene Anzahl an anderen Zeilen. Dies kann die Summe der 6 Kategorien der oberen Hälfte sein, oder aber die Gesamtsumme. Das weiß die Klasse nicht, sie summiert einfach alle übergebenen Zeilen auf. Auch dieser Wert kann nicht vom Spieler gesetzt werden.
+Achtung: Wenn Sie mittels Google und Copy-and-Paste arbeiten: die Verwendung von Methodenreferenzen ist nicht erlaubt (im gesamten Semester).
 
-Die gemeinsame Funktionalität soll in der abstrakten Basisklasse `Row` umgesetzt werden. Für alle Klassen sind bereits Testfälle vorhanden, die die Funktionalität im Code beschreiben. Ergänzen Sie die bestehenden Klassengerüste so, dass die bestehenden Testfälle alle grün werden.
+==== Aufgabe 13 - Implementieren des Iterable Interfaces
 
-[plantuml]
+Das `Iterable` Interface ermöglicht es eigenen Klassen, in einer foreach Schleife verwendet zu werden. In der Vorlesung
+habe ich das an unserem Würfelbecher vorgeführt. Setzen Sie die gleiche Technik ein, um das Scoreboard zu einem `Iterable`
+zu machen. Der dazu notwendige `ScoreBoard` Iterator soll dazu alle `Entry` Instanzen zurückliefern, die noch vom Spieler
+belegt werden können. Damit sollte folgender Testfall compilieren und korrekt funktionieren:
+
+[source,java]
 ----
-@startuml
+package edu.hm.hafner.assignment;
 
-skinparam class {
-  BackgroundColor #4AD386
-  BorderColor #a0a0a0
-  BackgroundColor<<Main>> gold
-  BorderColor black
-  ArrowColor black
-  FontName  Arial Unicode MS
-  FontSize 20
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.*;
+
+/**
+ * Tests the class {@link ScoreBoard}.
+ *
+ * @author Ullrich Hafner
+ */
+class ScoreBoardTest {
+    @Test
+    void shouldIterateOverAllEntries() {
+        ScoreBoard scoreBoard = new ScoreBoard("Ullrich Hafner");
+        Entry[] remainingEntries = scoreBoard.getRemainingEntries();
+
+        int index = 0;
+        for (Entry entry : scoreBoard) {
+            assertThat(entry).isSameAs(remainingEntries[index++]);
+        }
+        assertThat(index).isEqualTo(13);
+    }
 }
-
-skinparam classFontSize 24
-skinparam classAttributeIconSize 0
-skinparam defaultFontSize 20
-
-skinparam ArrowColor black
-skinparam ArrowThickness 2
-
-hide circle
-
-
-class " Row " as Row
-class " Entry " as Entry
-class " Bonus " as Bonus
-class " Sum " as Sum
-
-abstract class Row {
-    displayName: String
-    #Row(displayName: String)
-    +getDisplayName(): String
-    +getText(): String
-    +printScore(): String;
-    {abstract} +getScore(): Integer;
-}
-
-class Entry {
-    +Entry(displayName: String, evaluator: YahtzeeEvaluator) {
-    +getScore(): Integer;
-    +printScore(): String;
-    isChosen(): Boolean
-    choose(faces: int[]): Boolean
-    evaluateScore(faces: int[]): Integer
-}
-
-class Bonus {
-    +Bonus(entries: Row[]) {
-    +getScore(): Integer;
-}
-
-class Sum {
-    public Sum(String displayName: String, entries: Row[]) {
-    +getScore(): Integer;
-}
-
-
-Row <|- Entry : \t\t
-Row <|-- Bonus
-Row <|-- Sum
-
-Bonus --> "*" Row: \t
-
-Sum -up-> "*" Row: \t
-
-@enduml
 ----
 
-Die Zuordnung der Klassen zu den einzelnen Zeilen ist in der folgenden Abbildung zu sehen:
+Schreiben Sie weitere Tests, die die Funktionalität Ihres Iterators überprüfen. Stellen Sie auch sicher, dass der
+Iterator eine `ConcurrentModificationException` wirft, wenn das `ScoreBoard` nach dem Erzeugen des Iterators verändert
+wurde.
 
-.Zuordnung der drei Klassen zu den einzelnen Zeilen
-[source,text]
-----
-Spieler ≪Ullrich Hafner≫ 0 Punkte nach 0 Runden
-              Einser  - // Entry
-              Zweier  - // Entry
-              Dreier  - // Entry
-              Vierer  - // Entry
-              Fünfer  - // Entry
-             Sechser  - // Entry
-          Summe oben  0 // Sum
-               Bonus  - // Bonus
-Gesamter oberer Teil  0 // Sum
-            Drilling  - // Entry
-            Vierling  - // Entry
-          Full House  - // Entry
-       Kleine Straße  - // Entry
-        Große Straße  - // Entry
-             Yahtzee  - // Entry
-              Chance  - // Entry
-         Summe unten  0 // Sum
-         Gesamtsumme  0 // Sum
-----
 
-=== Anhang: der gesamte Spielblock
 
-Damit Sie nicht nur die einzelnen Zeilen des Spielblocks programmieren, sondern auch den gesamten Spielblock einmal sehen, habe ich Ihnen bereits zwei Tests vorgegeben. Diese beiden Tests spielen die beiden Spielrunden des oberen Szenarios durch und geben den Spielblock aus.
-
-Als Zusatzaufgabe sollten Sie einige weitere Spielzüge im `ScoreBoardTest` Test ergänzen, z.B. mit folgenden Szenarien:
-
-- Spielen aller 13 Runden
-- beliebige Werte pro Bild
-- maximal Werte pro Bild
-- minimal Werte pro Bild
-- Spielen der oberen 6 Felder: einmal mit, einmal ohne Bonus
-- Versuch, mehrmals das gleiche Bild zu setzten
-- Versuch, ein Bild außerhalb des gültigen Bereichs zu wählen
 
