@@ -1,6 +1,10 @@
 package edu.hm.hafner.java2.assignment7;
 
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * A score board for a Yahtzee player.
@@ -8,7 +12,7 @@ import java.util.Arrays;
  * @author Ullrich Hafner
  */
 @SuppressWarnings("checkstyle:ClassDataAbstractionCoupling")
-public class ScoreBoard {
+public final class ScoreBoard implements Comparable<ScoreBoard>, Iterable<Entry> {
     /**
      * The available categories in Yahtzee.
      */
@@ -111,12 +115,17 @@ public class ScoreBoard {
      */
     public String print() {
         StringBuilder board = new StringBuilder(1024);
-        board.append(String.format("%s: %d Punkte nach %d Runden%n", getPlayer(), getScore(), getPlayedRounds()));
+        board.append(getTitle());
+        board.append('\n');
         for (Row entry : rows) {
             board.append(entry.getText());
             board.append('\n');
         }
         return board.toString();
+    }
+
+    private String getTitle() {
+        return String.format("%s: %d Punkte nach %d Runden", getPlayer(), getScore(), getPlayedRounds());
     }
 
     private int getPlayedRounds() {
@@ -153,5 +162,103 @@ public class ScoreBoard {
      */
     public int evaluateScore(final Category category, final int... faces) {
         return entries[category.ordinal()].evaluateScore(faces);
+    }
+
+    /**
+     * Returns the remaining categories that have not been chosen yet.
+     *
+     * @return the remaining categories
+     */
+    public Entry[] getRemainingEntries() {
+        Entry[] remaining = new Entry[entries.length - getPlayedRounds()];
+        int index = 0;
+        for (Entry entry : entries) {
+            if (!entry.isChosen()) {
+                remaining[index++] = entry;
+            }
+        }
+        return remaining;
+    }
+
+    @Override
+    public String toString() {
+        return getTitle();
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ScoreBoard entries1 = (ScoreBoard) o;
+        return Objects.equals(player, entries1.player) && Arrays.equals(entries, entries1.entries)
+                && Arrays.equals(rows, entries1.rows);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(player);
+        result = 31 * result + Arrays.hashCode(entries);
+        result = 31 * result + Arrays.hashCode(rows);
+        return result;
+    }
+
+    @Override
+    public int compareTo(final ScoreBoard o) {
+        return player.compareTo(o.player);
+    }
+
+    @Override
+    public Iterator<Entry> iterator() {
+        return new ScoreBoardIterator(this);
+    }
+
+    public static class NameComparator implements Comparator<ScoreBoard> {
+        @Override
+        public int compare(final ScoreBoard o1, final ScoreBoard o2) {
+            int delta = o1.getPlayer().compareTo(o2.getPlayer());
+            if (delta == 0) {
+                return new ScoreComparator().compare(o1, o2);
+            }
+            return delta;
+        }
+    }
+
+    public static class ScoreComparator implements Comparator<ScoreBoard> {
+        @Override
+        public int compare(final ScoreBoard o1, final ScoreBoard o2) {
+            int delta = o2.getScore() - o1.getScore();
+            if (delta == 0) {
+                return new NameComparator().compare(o1, o2);
+            }
+            return delta;
+        }
+    }
+
+    public static class ScoreBoardIterator implements Iterator<Entry> {
+        private final ScoreBoard board;
+        private int index = 0;
+        private final int playedRounds;
+
+        public ScoreBoardIterator(final ScoreBoard board) {
+            this.board = board;
+            playedRounds = board.getPlayedRounds();
+        }
+
+        @Override
+        public boolean hasNext() {
+            return index < board.entries.length - playedRounds;
+        }
+
+        @Override
+        public Entry next() {
+            if (board.getPlayedRounds() != playedRounds) {
+                throw new ConcurrentModificationException("Board has been modified: " + board);
+            }
+            return board.getRemainingEntries()[index++];
+        }
     }
 }
