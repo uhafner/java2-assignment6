@@ -26,46 +26,41 @@ endif::[]
 
 == Collections in Yahtzee
 
-Basis für alle Aufgaben dieses Blattes ist wieder das Würfelspiel Yahtzee, das wir in den vorherigen Blättern als
-Thema hatten.
+Basis für alle Aufgaben dieses Blattes ist wieder das Würfelspiel Yahtzee, das wir in den vorherigen Blättern als Thema hatten.
 
-=== Aufgabe 12 -- Sortieren von Collections
+=== Aufgabe 12 -- Sortieren
 
-Im letzten Blatt haben wir den Yahtzee Spielblock vollendet. Ergebnis war eine Klasse, das den Punktestand einer spielenden Person verwaltet: Das Ergebnis eines Spielers lässt sich konnten Sie bereits ausgeben, aber schöner wäre natürlich die automatische Sortierung der Ergebnisse. Dazu muss das `SccoreBoard` sortierbar werden.
+Im letzten Blatt haben wir den Yahtzee Spielblock vollendet. Ergebnis war eine Klasse, die den Punktestand einer spielenden Person verwaltet: Das Ergebnis eines Spielers konnten Sie bereits ausgeben, aber schöner wäre natürlich die automatische Sortierung der Ergebnisse. Dazu muss das `SccoreBoard` sortierbar werden.
 
 ==== Aufgabe 12.1 -- Implementieren des Comparable Interfaces
 
-Implementieren Sie das `Comparable` Interface für die Klasse `SccoreBoard`. Als Sortierkriterium soll der Punktestand verwendet werden (absteigende Sortierung, also das Element mit den meisten Punkten zuerst). Ist der Punktestand zweier Instanzen gleich, soll anschließend diejenige Instanz vorne liegen, die weniger Runden für den Punktestand gebraucht hat. Ist auch hier wieder Gleichstand, dann wird noch verglichen, wer weniger Einträge gestrichen hat (also am wenigsten 0 Punkte Einträge hat). Wenn immer noch Gleichstand herrscht, soll letztendlich der Name als Sortierkriterium verwendet werden (Alphabet), der ist ja zum Glück eindeutig im System.
+Implementieren Sie dazu das `Comparable` Interface für die Klasse `SccoreBoard`. Als Sortierkriterium soll der Punktestand verwendet werden (absteigende Sortierung, also das Element mit den meisten Punkten zuerst). Ist der Punktestand zweier Instanzen gleich, soll anschließend diejenige Instanz vorne liegen, die weniger Runden für den Punktestand gebraucht hat. Ist auch hier wieder Gleichstand, dann wird noch verglichen, wer weniger Einträge gestrichen hat (also am wenigsten 0 Punkte Einträge hat). Wenn immer noch Gleichstand herrscht, soll letztendlich der Name als Sortierkriterium verwendet werden (Alphabet), der ist ja zum Glück eindeutig im System.
 
 Schreiben Sie Tests, die die korrekte Funktionsweise Ihrer `Comparable` Implementierung überprüfen. Legen Sie dazu z.B. drei `ScoreBoard` Instanzen an und fügen Sie diese in eine Liste. Verändern Sie die Scores und sortieren Sie dann die Liste. Abschließend prüfen Sie die korrekte Sortierung der Instanzen. Denken Sie auch daran, verschiedenen Startreihenfolgen zu testen (schon richtig sortiert, falsch sortiert, etc.).
 
 Beispiel:
 [text]
 ----
-Costantino, 120, 12 Runden, 1 gestrichen
-Hafner, 120, 13 Runden, 0 gestrichen
-Katz, 120, 13 Runden, 1 gestrichen
+1. Katz, 120, 12 Runden, 1 gestrichen
+2. Ebke, 120, 13 Runden, 0 gestrichen
+3. Hafner, 120, 13 Runden, 1 gestrichen
 ----
 
-==== Aufgabe 1b -- Sortierung des Scoreboards nach Name
+==== Aufgabe 11.2 -- Sortierung des Scoreboards nach Name
 
-Schreiben Sie einen `Comparator`, der zum Sortieren einer Liste von `ScoreBoard` Instanzen verwendet werden kann.
-Die Sortierung soll nur alphabetisch nach Name erfolgen.
+Schreiben Sie einen `Comparator`, der zum Sortieren einer Liste von `ScoreBoard` Instanzen verwendet werden kann. Die Sortierung soll nur alphabetisch nach Name erfolgen.
 
-Schreiben Sie Tests, die die korrekte Funktionsweise Ihres Comparators überprüfen.
-Legen Sie dazu z.B. drei `ScoreBoard` Instanzen an und fügen Sie diese in eine Liste.
-Sortieren Sie dann die Liste. Abschließend prüfen Sie die korrekte Sortierung der Instanzen. Denken Sie daran,
-verschiedenen Startreihenfolgen zu testen.
+Schreiben Sie Tests, die die korrekte Funktionsweise Ihres Comparators überprüfen. Legen Sie dazu z.B. drei `ScoreBoard` Instanzen an und fügen Sie diese in eine Liste. Sortieren Sie dann die Liste. Abschließend prüfen Sie die korrekte Sortierung der Instanzen. Denken Sie daran, verschiedenen Startreihenfolgen zu testen.
 
 Beispiel:
 [text]
 ----
-Costantino, 115
-Hafner, 120
-Katz, 99
+1. Ebke, 115
+2. Hafner, 120
+3. Katz, 99
 ----
 
-==== Aufgabe 1c -- Sortierung des Scoreboards nach Score
+==== Aufgabe 11.3 -- Sortierung des Scoreboards nach Score
 
 Schreiben Sie einen weiteren `Comparator`, der zum Sortieren einer Liste von `ScoreBoard` Instanzen verwendet werden kann. Die Sortierung soll diesmal nach Punkten gehen: d.h. zunächst kommen die Instanzen mit hohen Punktezahlen, dann die Instanzen mit den niedrigen Punktezahlen.
 
@@ -74,26 +69,23 @@ Schreiben Sie Tests, die die korrekte Funktionsweise Ihres Comparators überprü
 Beispiel:
 [text]
 ----
-Kuhn, 120
-Hafner, 115
-Kersting, 98
+1. Hafner, 120
+2. Ebke, 115
+3. Katz, 99
 ----
 
-==== Aufgabe 1d -- Kombinieren mehrerer Comparatoren
+==== Aufgabe 11.4 -- Kombinieren mehrerer Comparatoren
 
-Informieren Sie sich im Internet (z.B. unter der offiziellen https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Comparator.html[Oracle Java Seite])wie man mehrere Comparatoren miteinander verknüpft. Schreiben Sie 2 weitere Testfälle, die diese Verknüpfung testen:
+Informieren Sie sich im Internet (z.B. unter der offiziellen https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html[Oracle Java Seite]), wie man mehrere Comparatoren miteinander verknüpft. Schreiben Sie 2 weitere Testfälle, die diese Verknüpfung testen:
 
 1. Sortierung nach Name und dann nach Score
 2. Sortierung nach Score und dann nach Name
 
 Achtung: Wenn Sie mittels Google und Copy-and-Paste arbeiten: die Verwendung von Methodenreferenzen ist nicht erlaubt (im gesamten Semester).
 
-==== Aufgabe 13 - Implementieren des Iterable Interfaces
+==== Aufgabe 12 - Implementieren des Iterable Interfaces
 
-Das `Iterable` Interface ermöglicht es eigenen Klassen, in einer foreach Schleife verwendet zu werden. In der Vorlesung
-habe ich das an unserem Würfelbecher vorgeführt. Setzen Sie die gleiche Technik ein, um das Scoreboard zu einem `Iterable`
-zu machen. Der dazu notwendige `ScoreBoard` Iterator soll dazu alle `Entry` Instanzen zurückliefern, die noch vom Spieler
-belegt werden können. Damit sollte folgender Testfall compilieren und korrekt funktionieren:
+Das `Iterable` Interface ermöglicht es eigenen Klassen, in einer foreach Schleife verwendet zu werden. In der Vorlesung habe ich das an unserem Würfelbecher vorgeführt. Setzen Sie die gleiche Technik ein, um das Scoreboard zu einem `Iterable` zu machen. Der dazu notwendige `ScoreBoard` Iterator soll dazu alle `Entry` Instanzen zurückliefern, die noch vom Spieler belegt werden können. Damit sollte folgender Testfall compilieren und korrekt funktionieren:
 
 [source,java]
 ----
@@ -123,9 +115,7 @@ class ScoreBoardTest {
 }
 ----
 
-Schreiben Sie weitere Tests, die die Funktionalität Ihres Iterators überprüfen. Stellen Sie auch sicher, dass der
-Iterator eine `ConcurrentModificationException` wirft, wenn das `ScoreBoard` nach dem Erzeugen des Iterators verändert
-wurde.
+Schreiben Sie weitere Tests, die die Funktionalität Ihres Iterators überprüfen. Stellen Sie auch sicher, dass der Iterator eine `ConcurrentModificationException` wirft, wenn das `ScoreBoard` nach dem Erzeugen des Iterators verändert wurde.
 
 
 
