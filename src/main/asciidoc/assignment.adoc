@@ -46,7 +46,7 @@ Beispiel:
 3. Hafner, 120, 13 Runden, 1 gestrichen
 ----
 
-==== Aufgabe 11.2 -- Sortierung des Scoreboards nach Name
+==== Aufgabe 12.2 -- Sortierung des Scoreboards nach Name
 
 Schreiben Sie einen `Comparator`, der zum Sortieren einer Liste von `ScoreBoard` Instanzen verwendet werden kann. Die Sortierung soll nur alphabetisch nach Name erfolgen.
 
@@ -60,7 +60,7 @@ Beispiel:
 3. Katz, 99
 ----
 
-==== Aufgabe 11.3 -- Sortierung des Scoreboards nach Score
+==== Aufgabe 12.3 -- Sortierung des Scoreboards nach Score
 
 Schreiben Sie einen weiteren `Comparator`, der zum Sortieren einer Liste von `ScoreBoard` Instanzen verwendet werden kann. Die Sortierung soll diesmal nach Punkten gehen: d.h. zunächst kommen die Instanzen mit hohen Punktezahlen, dann die Instanzen mit den niedrigen Punktezahlen.
 
@@ -74,7 +74,7 @@ Beispiel:
 3. Katz, 99
 ----
 
-==== Aufgabe 11.4 -- Kombinieren mehrerer Comparatoren
+==== Aufgabe 12.4 -- Kombinieren mehrerer Comparatoren
 
 Informieren Sie sich im Internet (z.B. unter der offiziellen https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html[Oracle Java Seite]), wie man mehrere Comparatoren miteinander verknüpft. Schreiben Sie 2 weitere Testfälle, die diese Verknüpfung testen:
 
@@ -83,7 +83,7 @@ Informieren Sie sich im Internet (z.B. unter der offiziellen https://docs.oracle
 
 Achtung: Wenn Sie mittels Google und Copy-and-Paste arbeiten: die Verwendung von Methodenreferenzen ist nicht erlaubt (im gesamten Semester).
 
-==== Aufgabe 12 - Implementieren des Iterable Interfaces
+==== Aufgabe 13 - Implementieren des Iterable Interfaces
 
 Das `Iterable` Interface ermöglicht es eigenen Klassen, in einer foreach Schleife verwendet zu werden. In der Vorlesung habe ich das an unserem Würfelbecher vorgeführt. Setzen Sie die gleiche Technik ein, um das Scoreboard zu einem `Iterable` zu machen. Der dazu notwendige `ScoreBoard` Iterator soll dazu alle `Entry` Instanzen zurückliefern, die noch vom Spieler belegt werden können. Damit sollte folgender Testfall compilieren und korrekt funktionieren:
 
